@@ -1,0 +1,8 @@
+FROM apache/hadoop:3.4.0
+
+RUN mkdir -p /opt/hadoop/dfsdata/namenode
+RUN mkdir -p /opt/hadoop/tmpdata/dfs/name/
+
+EXPOSE 9870
+
+CMD ["sh", "-c", "hdfs namenode -format -force -nonInteractive && hdfs namenode"]

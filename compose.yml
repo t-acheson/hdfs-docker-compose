@@ -1,0 +1,67 @@
+services:
+  namenode:
+    build: ./namenode
+    ports:
+      - "9870:9870"
+      - "9000:9000"
+    # namenode config files
+    volumes:
+      - ./config/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./config/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+
+  resourcemanager:
+    build: ./resourcemanager
+    ports:
+      - "8088:8088"
+    # resourcemanager config files
+    volumes:
+      - ./config/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./config/yarn-site.xml:/opt/hadoop/etc/hadoop/yarn-site.xml
+      - ./config/mapred-site.xml:/opt/hadoop/etc/hadoop/mapred-site.xml
+    depends_on:
+      - namenode
+  
+  nodemanager:
+    build: ./nodemanager
+    ports:
+      - "8042:8042"
+    # nodemanager config files
+    volumes:
+      - ./config/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./config/yarn-site.xml:/opt/hadoop/etc/hadoop/yarn-site.xml
+      - ./config/mapred-site.xml:/opt/hadoop/etc/hadoop/mapred-site.xml
+    depends_on:
+      - resourcemanager
+
+  datanode1:
+    build: ./datanode
+    ports:
+      - "9864:9864"
+    # datanode config files
+    volumes:
+      - ./config/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./config/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+    depends_on:
+      - namenode
+
+  datanode2:
+    build: ./datanode
+    ports:
+      - "9865:9864"
+    # datanode config files
+    volumes:
+      - ./config/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./config/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+    depends_on:
+      - namenode
+
+  datanode3:
+    build: ./datanode
+    ports:
+      - "9866:9864"
+    # datanode config files
+    volumes:
+      - ./config/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./config/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+    depends_on:
+      - namenode
