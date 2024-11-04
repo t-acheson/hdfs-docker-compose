@@ -8,6 +8,7 @@ services:
     volumes:
       - ./config/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
       - ./config/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+    platform: linux/amd64
 
   resourcemanager:
     build: ./resourcemanager
@@ -20,6 +21,7 @@ services:
       - ./config/mapred-site.xml:/opt/hadoop/etc/hadoop/mapred-site.xml
     depends_on:
       - namenode
+    platform: linux/amd64
   
   nodemanager:
     build: ./nodemanager
@@ -32,6 +34,7 @@ services:
       - ./config/mapred-site.xml:/opt/hadoop/etc/hadoop/mapred-site.xml
     depends_on:
       - resourcemanager
+    platform: linux/amd64
 
   datanode1:
     build: ./datanode
@@ -43,25 +46,28 @@ services:
       - ./config/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
     depends_on:
       - namenode
+    platform: linux/amd64
 
-  datanode2:
-    build: ./datanode
-    ports:
-      - "9865:9864"
-    # datanode config files
-    volumes:
-      - ./config/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
-      - ./config/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
-    depends_on:
-      - namenode
+  # datanode2:
+  #   build: ./datanode
+  #   ports:
+  #     - "9865:9864"
+  #   # datanode config files
+  #   volumes:
+  #     - ./config/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+  #     - ./config/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+  #   depends_on:
+  #     - namenode
+  #   platform: linux/amd64
 
-  datanode3:
-    build: ./datanode
-    ports:
-      - "9866:9864"
-    # datanode config files
-    volumes:
-      - ./config/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
-      - ./config/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
-    depends_on:
-      - namenode
+  # datanode3:
+  #   build: ./datanode
+  #   ports:
+  #     - "9866:9864"
+  #   # datanode config files
+  #   volumes:
+  #     - ./config/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+  #     - ./config/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+  #   depends_on:
+  #     - namenode
+  #   platform: linux/amd64
